@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <h3>Login with your username and password</h3>
     <ul>
-      <li></li>
+      <li>dit is een testbericht</li>
     </ul>
   </div>
 </template>
