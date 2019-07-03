@@ -39,6 +39,7 @@ export default {
       });
       let login = await bankAuth.owner.getToken(uname, psw);
       if(login.accessToken){
+        this.$store.state.accessToken = login.accessToken
         this.$emit("authenticated", true);
         this.$router.replace({ name: "secure" });
       } else{
