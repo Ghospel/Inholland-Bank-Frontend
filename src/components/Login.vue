@@ -1,39 +1,22 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>Welcome to the InHolland Bank App</h1>
     <div class="container">
       <form id="login">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" v-model="uname" required>
-
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" v-model="psw" required>
-
         <button type="button" v-on:click="login(uname, psw)">Login</button>
-
-        {{uname}}
-        {{psw}}
       </form>
     </div>
   </div>
 </template>
 
 <script>
-// Set the configuration settings
-// const axios = require('axios');
-// axios({
-//     method: 'post',
-//     url: 'http://localhost:8080/oauth/token',
-//     responseType: 'application/json'
-//   })
-//   .then(function (response) {
-//     console.log(response)
-//   }); 
-
 export default {
-  name: 'HelloWorld',
+  name: 'Login',
   props: {
-    msg: String
   },
   data: function () {
     return {
