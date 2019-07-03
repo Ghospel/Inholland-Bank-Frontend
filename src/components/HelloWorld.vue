@@ -9,7 +9,7 @@
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" v-model="psw" required>
 
-        <button type="submit" v-on:click="login(uname, psw)">Login</button>
+        <button type="button" v-on:click="login(uname, psw)">Login</button>
 
         {{uname}}
         {{psw}}
@@ -20,15 +20,15 @@
 
 <script>
 // Set the configuration settings
-/* const axios = require('axios');
-axios({
-    method: 'get',
-    url: 'http://localhost:8080/api/customer',
-    responseType: 'application/json'
-  })
-  .then(function (response) {
-    console.log(response)
-  }); */
+// const axios = require('axios');
+// axios({
+//     method: 'post',
+//     url: 'http://localhost:8080/oauth/token',
+//     responseType: 'application/json'
+//   })
+//   .then(function (response) {
+//     console.log(response)
+//   }); 
 
 export default {
   name: 'HelloWorld',
@@ -37,43 +37,28 @@ export default {
   },
   data: function () {
     return {
-      uname: 'username',
-      psw: 'password'
+      uname: 'user',
+      psw: 'user'
     }
   },
   methods: {
     login: async function (uname, psw) {
-        const credentials = {
-          client: {
-            id: process.env.CLIENT_ID,
-            secret: process.env.CLIENT_SECRET
-          },
-          auth: {
-            tokenHost: 'http://localhost:8080/oauth/token'
-          }
-        };
-        
-        // Initialize the OAuth2 Library
-        const oauth2 = require('simple-oauth2').create(credentials);
+    
+      let ClientOAuth2 = require('client-oauth2')
 
-        // Get the access token object.
-        const tokenConfig = {
-          username: uname,
-          password: psw
-        };
-        
-      console.log(uname, psw);
-        // Save the access token
-        try {
-          const result = await oauth2.ownerPassword.getToken(tokenConfig);
-          const accessToken = oauth2.accessToken.create(result);
-          console.log('2', accessToken);
-        } catch (error) {
-          console.log('Access Token Error', error.message);
-        }
-      }
+      const bankAuth = new ClientOAuth2({
+        clientId: 'my-trusted-client',
+        clientSecret: 'secret',
+        accessTokenUri: 'http://localhost:8080/oauth/token',
+      })
+
+      bankAuth.owner.getToken(uname, psw)
+        .then(function (user) {
+        console.log(user) //=> { accessToken: '...', tokenType: 'bearer', ... }
+      })
     }
   }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
