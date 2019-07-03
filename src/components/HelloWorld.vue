@@ -3,12 +3,21 @@
     <h1>{{ msg }}</h1>
     <h3>Login with your username and password</h3>
     <ul>
-      <li>dit is een testbericht</li>
+      <li><a href="http://localhost:8080/oauth/token">Click here to Login</a></li>
     </ul>
   </div>
 </template>
 
 <script>
+const axios = require('axios');
+axios({
+  method: 'get',
+  url: 'http://localhost:8080/api/customer',
+  responseType: 'application/json'
+})
+  .then(function (response) {
+    console.log(response)
+});
 export default {
   name: 'HelloWorld',
   props: {
