@@ -1,68 +1,79 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-  <div class="container">
-  <form id="login">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" v-model="uname" required>
+    <div class="container">
+      <form id="login">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" v-model="uname" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" v-model="psw" required>
-        
-    <button type="submit">Login</button>
-  </form>
-  </div>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" v-model="psw" required>
+
+        <button type="submit" v-on:click="login(uname, psw)">Login</button>
+
+        {{uname}}
+        {{psw}}
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 // Set the configuration settings
-async function start() {
-const credentials = {
-  client: {
-    id: process.env.CLIENT_ID,
-    secret: process.env.CLIENT_SECRET
-  },
-  auth: {
-    tokenHost: 'http://localhost:8080/oauth/token'
-  }
-};
- 
-// Initialize the OAuth2 Library
-const oauth2 = require('simple-oauth2').create(credentials);
- 
-// Get the access token object.
-const tokenConfig = {
-  username: 'username',
-  password: 'password',
-};
- 
-// Save the access token
-try {
-  const result = await oauth2.ownerPassword.getToken(tokenConfig);
-  const accessToken = oauth2.accessToken.create(result);
-} catch (error) {
-  console.log('Access Token Error', error.message);
-  }
-
-const axios = require('axios');
+/* const axios = require('axios');
 axios({
-  method: 'get',
-  url: 'http://localhost:8080/api/customer',
-  responseType: 'application/json'
-})
+    method: 'get',
+    url: 'http://localhost:8080/api/customer',
+    responseType: 'application/json'
+  })
   .then(function (response) {
     console.log(response)
-});
-}
-start();
+  }); */
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data: function () {
+    return {
+      uname: 'username',
+      psw: 'password'
+    }
+  },
+  methods: {
+    login: async function (uname, psw) {
+        const credentials = {
+          client: {
+            id: process.env.CLIENT_ID,
+            secret: process.env.CLIENT_SECRET
+          },
+          auth: {
+            tokenHost: 'http://localhost:8080/oauth/token'
+          }
+        };
+        
+        // Initialize the OAuth2 Library
+        const oauth2 = require('simple-oauth2').create(credentials);
+
+        // Get the access token object.
+        const tokenConfig = {
+          username: uname,
+          password: psw
+        };
+        
+      console.log(uname, psw);
+        // Save the access token
+        try {
+          const result = await oauth2.ownerPassword.getToken(tokenConfig);
+          const accessToken = oauth2.accessToken.create(result);
+          console.log('2', accessToken);
+        } catch (error) {
+          console.log('Access Token Error', error.message);
+        }
+      }
+    }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
