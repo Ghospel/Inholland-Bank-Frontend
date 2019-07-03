@@ -37,12 +37,13 @@ export default {
         clientSecret: "secret",
         accessTokenUri: "http://localhost:8080/oauth/token"
       });
-      bankAuth.owner.getToken(uname, psw).then(function(user) {
-        console.log(user); //=> { accessToken: '...', tokenType: 'bearer', ... }
-        token = user.accessToken;
-      });
+      let login = await bankAuth.owner.getToken(uname, psw);
+      if(login.accessToken){
         this.$emit("authenticated", true);
         this.$router.replace({ name: "secure" });
+      } else{
+          console.log(' invalid credentials ')
+      }
     }
   }
 };

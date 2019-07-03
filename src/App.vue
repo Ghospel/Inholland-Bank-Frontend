@@ -1,10 +1,10 @@
 <template>
   <div id="app">
+    <img alt="Vue logo" src="./assets/logo2.png" />
     <div id="nav">
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
     </div>
     <router-view @authenticated="setAuthenticated" />
-    <img alt="Vue logo" src="./assets/logo2.png" />
   </div>
 </template>
 
