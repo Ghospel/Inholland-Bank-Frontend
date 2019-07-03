@@ -6,7 +6,6 @@
 </template>
 
 <script>
-require('dotenv').config()
 import Login from './components/Login.vue'
 
 export default {
