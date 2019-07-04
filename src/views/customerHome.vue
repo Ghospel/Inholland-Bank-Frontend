@@ -2,28 +2,32 @@
     <div id="secure">
         <v-app id="inspire">
         <h1>Personal Account</h1>
-        <p>
-            <v-data-table :headers="headers" :items="info" class="elevation-1" hide-actions>
-                <template v-slot:items="props">
-                    <td class="text-xs-left">{{ props.item.iban }}</td>
-                    <td class="text-xs-left">{{ props.item.type }}</td>
-                    <td class="text-xs-left">{{ props.item.balance }}</td>
-                    <td class="text-xs-left">{{ props.item.minimalBalance }}</td>
-                    <td class="text-xs-left">{{ props.item.daylimit }}</td>
-                </template>
-            </v-data-table>
-        </p>
+        <p />
+            <div v-if="dataReady">
+                <v-data-table :headers="headers" :items="info" class="elevation-1" hide-actions>
+                    <template v-slot:items="props">
+                        <td class="text-xs-left">{{ props.item.iban }}</td>
+                        <td class="text-xs-left">{{ props.item.type }}</td>
+                        <td class="text-xs-left">{{ props.item.balance }}</td>
+                        <td class="text-xs-left">{{ props.item.minimalBalance }}</td>
+                        <td class="text-xs-left">{{ props.item.daylimit }}</td>
+                    </template>
+                </v-data-table>
+            </div>
         </v-app>
     </div>
 </template>
 
 <script>
-    const axios = require('axios');
+
+import { getAccounts } from './../api'
+
 export default {
     name: 'Secure',
     data() {
         return {
-            info: [],
+            dataReady: false,
+            info: ['test'],
             headers: [{
                     width: '200',
                     text: 'IBAN',
@@ -50,20 +54,11 @@ export default {
             ]
         };
     },
-    mounted() {
-        axios
-            .get('http://localhost:8080/api/accounts', {
-                params: {
-
-                },
-                headers: {
-                    'Authorization': "Bearer" + this.$store.state.accessToken
-                }
-            })
-            .then(response => (this.info = response.data))
-            .catch(function (error) {
-                info = 'An error has occured.'
-            })
+    async mounted() {
+        let tmp = await getAccounts(this.$store.state.accessToken);
+        this.info = tmp;
+        this.dataReady = true;
+        console.log('info ', tmp)
     },
     methods: {}
 }

@@ -10,26 +10,29 @@ export async function getToken(uname, psw){
         let login = await bankAuth.owner.getToken(uname, psw);
         if(login.accessToken){
             return login.accessToken;
-            this.$store.state.accessToken = login.accessToken
-            this.$emit("authenticated", true);
-            this.$router.replace({ name: "secure" });
         } else{
             console.log(' invalid credentials ')
         }
 }
 
-export function getAccounts(){
-    axios
-    .get('http://localhost:8080/api/accounts', {
-        params: {
-
-        },
-        headers: {
-            'Authorization': "Bearer" + this.$store.state.accessToken
-        }
-    })
-    .then(response => (this.info = response.data))
-    .catch(function (error) {
-        info = 'An error has occured.'
+export async function getAccounts(token){
+    return new Promise(function(resolve, reject){
+        axios
+        .get('http://localhost:8080/api/accounts', {
+            params: {
+    
+            },
+            headers: {
+                'Authorization': "Bearer" + token
+            }
+        })
+        .then(response => {
+            console.log('returning: ', response.data)
+            resolve(response.data)
+        })
+        .catch(function (error) {
+            reject(error)
+        })
     })
 }
+
