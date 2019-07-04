@@ -1,28 +1,18 @@
 <template>
-    <div id="secure">
-        <v-app id="inspire">
-        <h1>Personal Account</h1>
-        <p />
-            <div v-if="dataReady">
-                <v-data-table :headers="headers" :items="info" class="elevation-1" hide-actions>
-                    <template v-slot:items="props">
-                        <td class="text-xs-left">{{ props.item.iban }}</td>
-                        <td class="text-xs-left">{{ props.item.type }}</td>
-                        <td class="text-xs-left">{{ props.item.balance }}</td>
-                        <td class="text-xs-left">{{ props.item.minimalBalance }}</td>
-                        <td class="text-xs-left">{{ props.item.daylimit }}</td>
-                    </template>
-                </v-data-table>
-            </div>
-        </v-app>
+    <div v-if="this.dataReady">
+        <accounts :headers="this.headers" :values="this.info"></accounts>
     </div>
 </template>
 
 <script>
 
 import { getAccounts } from './../api'
+import accounts from './../components/accounts'
 
 export default {
+    components: {
+        accounts
+    },
     name: 'Secure',
     data() {
         return {
