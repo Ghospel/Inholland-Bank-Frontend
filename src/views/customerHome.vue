@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.dataReady">
+    <div v-if="this.dataReady" class="spacerBottom">
         <p />
         <h1>Personal Account</h1>
         <customers :values="this.customersData"></customers>
@@ -50,5 +50,8 @@ export default {
         border: 1px solid #CCCCCC;
         padding: 20px;
         margin-top: 10px;
+    }
+    .spacerBottom {
+        margin-bottom: 100px;
     }
 </style>
