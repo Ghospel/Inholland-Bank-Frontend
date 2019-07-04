@@ -31,12 +31,9 @@ export default {
         };
     },
     async mounted() {
-        let tmpAccounts = await getAccounts(this.$store.state.accessToken);
-        let tmpCustomers = await getCustomers(this.$store.state.accessToken);
-        let tmpTransactions = await getTransactions(this.$store.state.accessToken);
-        this.transactionsData = tmpTransactions;
-        this.accountsData = tmpAccounts;
-        this.customersData = tmpCustomers;
+        this.accountsData = await getAccounts(this.$store.state.accessToken);
+        this.customersData = await getCustomers(this.$store.state.accessToken);
+        this.transactionsData = await getTransactions(this.$store.state.accessToken);
         this.dataReady = true;
     },
     methods: {}
