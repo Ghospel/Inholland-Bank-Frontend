@@ -3,16 +3,13 @@
         <v-app id="inspire">
         <h1>Personal Account</h1>
         <p>
-            yeet
-            {{ $store.state.accessToken }} 
-            <v-data-table :headers="headers" :items="info" class="elevation-1" dark="true" hide-actions>
+            <v-data-table :headers="headers" :items="info" class="elevation-1" hide-actions>
                 <template v-slot:items="props">
-                    <td>{{ props.item.name }}</td>
-                    <td class="text-xs-right">{{ props.item.iban }}</td>
-                    <td class="text-xs-right">{{ props.item.type }}</td>
-                    <td class="text-xs-right">{{ props.item.balance }}</td>
-                    <td class="text-xs-right">{{ props.item.minimumBalance }}</td>
-                    <td class="text-xs-right">{{ props.item.daylimit }}</td>
+                    <td class="text-xs-left">{{ props.item.iban }}</td>
+                    <td class="text-xs-left">{{ props.item.type }}</td>
+                    <td class="text-xs-left">{{ props.item.balance }}</td>
+                    <td class="text-xs-left">{{ props.item.minimalBalance }}</td>
+                    <td class="text-xs-left">{{ props.item.daylimit }}</td>
                 </template>
             </v-data-table>
         </p>
@@ -28,6 +25,7 @@ export default {
         return {
             info: [],
             headers: [{
+                    width: '200',
                     text: 'IBAN',
                     align: 'left',
                     sortable: false,
@@ -73,6 +71,7 @@ export default {
 
 <style scoped>
     #secure {
+        width: 100vw;
         background-color: #FFFFFF;
         border: 1px solid #CCCCCC;
         padding: 20px;

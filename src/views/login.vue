@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     login: async function(uname, psw) {
-      let token;
       let ClientOAuth2 = require("client-oauth2");
 
       const bankAuth = new ClientOAuth2({
