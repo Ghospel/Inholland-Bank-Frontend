@@ -1,6 +1,7 @@
 const axios = require('axios')
 
 export async function getToken(uname, psw){
+    return new Promise(async function (resolve, reject) {
         let ClientOAuth2 = require("client-oauth2");
         const bankAuth = new ClientOAuth2({
             clientId: "my-trusted-client",
@@ -9,10 +10,11 @@ export async function getToken(uname, psw){
         });
         let login = await bankAuth.owner.getToken(uname, psw);
         if(login.accessToken){
-            return login.accessToken;
+            resolve(login.accessToken)
         } else{
-            console.log(' invalid credentials ')
+            reject('invalid credentials')
         }
+    })
 }
 
 export async function getAccounts(token){
