@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { getToken } from './../api'
 export default {
   name: "Login",
   props: {},
@@ -29,24 +30,16 @@ export default {
   },
   methods: {
     login: async function(uname, psw) {
-      let ClientOAuth2 = require("client-oauth2");
-
-      const bankAuth = new ClientOAuth2({
-        clientId: "my-trusted-client",
-        clientSecret: "secret",
-        accessTokenUri: "http://localhost:8080/oauth/token"
-      });
-      let login = await bankAuth.owner.getToken(uname, psw);
-      if(login.accessToken){
-        this.$store.state.accessToken = login.accessToken
+      const token = await getToken(uname,psw);
+      if(token){
+        this.$store.state.accessToken = token
         this.$emit("authenticated", true);
         this.$router.replace({ name: "secure" });
-      } else{
-          console.log(' invalid credentials ')
       }
     }
   }
-};
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
