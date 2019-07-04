@@ -1,8 +1,6 @@
 <template>
-  <div id="secure">
-    <v-app id="inspire">
-      <h1>Personal Account</h1>
-      <p />
+  <div class="container">
+      <h3>Accounts</h3>
         <v-data-table :headers="headers" :items="values" class="elevation-1" hide-actions>
           <template v-slot:items="props">
             <td class="text-xs-left">{{ props.item.iban }}</td>
@@ -12,17 +10,44 @@
             <td class="text-xs-left">{{ props.item.daylimit }}</td>
           </template>
         </v-data-table>
-    </v-app>
   </div>
 </template>
 
 <script>
 export default {
   name: "accounts",
-  // To use props, they must be declared
-  props: {
-    headers: Array,
+  data() {
+    return{
+        headers: 
+        [{
+            width: '200',
+            text: 'IBAN',
+            align: 'left',
+            sortable: false,
+            value: 'iban'
+        },
+        {
+            text: 'Account Type',
+            value: 'type'
+        },
+        {
+            text: 'Account Balance',
+            value: 'balance'
+        },
+        {
+            text: 'Minimum Balance',
+            value: 'minimumBalance'
+        },
+        {
+            text: 'Daily Transaction Limit',
+            value: 'daylimit'
+        }
+    ],
+    }
+},
+props: {
     values: Array,
-  }
+}
 };
 </script>
+

@@ -1,54 +1,43 @@
 <template>
     <div v-if="this.dataReady">
-        <accounts :headers="this.headers" :values="this.info"></accounts>
+        <p />
+        <h1>Personal Account</h1>
+        <customers :values="this.customersData"></customers>
+        <accounts :values="this.accountsData"></accounts>
+        <transactions :values="this.transactionsData"></transactions>
     </div>
 </template>
 
 <script>
 
-import { getAccounts } from './../api'
+import { getAccounts, getCustomers, getTransactions } from './../api'
 import accounts from './../components/accounts'
+import customers from './../components/customers'
+import transactions from './../components/transactions'
 
 export default {
     components: {
-        accounts
+        accounts,
+        customers,
+        transactions
     },
     name: 'Secure',
     data() {
         return {
             dataReady: false,
-            info: ['test'],
-            headers: [{
-                    width: '200',
-                    text: 'IBAN',
-                    align: 'left',
-                    sortable: false,
-                    value: 'iban'
-                },
-                {
-                    text: 'Account Type',
-                    value: 'type'
-                },
-                {
-                    text: 'Account Balance',
-                    value: 'balance'
-                },
-                {
-                    text: 'Minimum Balance',
-                    value: 'minimumBalance'
-                },
-                {
-                    text: 'Daily Transaction Limit',
-                    value: 'daylimit'
-                }
-            ]
+            accountsData: [],
+            customersData: [],
+            transactionsData: []
         };
     },
     async mounted() {
-        let tmp = await getAccounts(this.$store.state.accessToken);
-        this.info = tmp;
+        let tmpAccounts = await getAccounts(this.$store.state.accessToken);
+        let tmpCustomers = await getCustomers(this.$store.state.accessToken);
+        let tmpTransactions = await getTransactions(this.$store.state.accessToken);
+        this.transactionsData = tmpTransactions;
+        this.accountsData = tmpAccounts;
+        this.customersData = tmpCustomers;
         this.dataReady = true;
-        console.log('info ', tmp)
     },
     methods: {}
 }

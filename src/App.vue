@@ -43,4 +43,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.container {
+  width: 30%;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

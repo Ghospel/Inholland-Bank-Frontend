@@ -38,3 +38,47 @@ export async function getAccounts(token){
     })
 }
 
+export async function getTransactions(token){
+    return new Promise(function(resolve, reject){
+        axios
+        .get('http://localhost:8080/api/transaction', {
+            params: {
+    
+            },
+            headers: {
+                'Authorization': "Bearer" + token
+            }
+        })
+        .then(response => {
+            console.log('transaction: ', response.data)
+            resolve(response.data)
+        })
+        .catch(function (error) {
+            console.log('transaction err: ', error)
+            reject(error)
+        })
+    })
+}
+
+export async function getCustomers(token){
+    return new Promise(function(resolve, reject){
+        axios
+        .get('http://localhost:8080/api/customer', {
+            params: {
+    
+            },
+            headers: {
+                'Authorization': "Bearer" + token
+            }
+        })
+        .then(response => {
+            console.log('customer: ', response.data)
+            resolve(response.data)
+        })
+        .catch(function (error) {
+            console.log('customer err: ', error)
+            reject(error)
+        })
+    })
+}
+
