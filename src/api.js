@@ -1,3 +1,5 @@
+import { async } from 'q';
+
 const axios = require('axios')
 
 export async function getToken(uname, psw){
@@ -17,10 +19,10 @@ export async function getToken(uname, psw){
     })
 }
 
-export async function getAccounts(token){
-    return new Promise(function(resolve, reject){
+async function get(token, endpoint){
+    return new Promise(async function(resolve, reject){
         axios
-        .get('http://localhost:8080/api/accounts', {
+        .get(`http://localhost:8080/api/${endpoint}`, {
             params: {
     
             },
@@ -38,47 +40,20 @@ export async function getAccounts(token){
     })
 }
 
+export async function getAccounts(token){
+    return new Promise(async function(resolve, reject){
+        resolve(await get(token, 'accounts')).catch(err => { reject(err) });
+    })
+}
+
 export async function getTransactions(token){
-    return new Promise(function(resolve, reject){
-        axios
-        .get('http://localhost:8080/api/transaction', {
-            params: {
-    
-            },
-            headers: {
-                'Authorization': "Bearer" + token
-            }
-        })
-        .then(response => {
-            console.log('transaction: ', response.data)
-            resolve(response.data)
-        })
-        .catch(function (error) {
-            console.log('transaction err: ', error)
-            reject(error)
-        })
+    return new Promise(async function(resolve, reject){
+        resolve(await get(token, 'transaction')).catch(err => { reject(err) });
     })
 }
 
 export async function getCustomers(token){
-    return new Promise(function(resolve, reject){
-        axios
-        .get('http://localhost:8080/api/customer', {
-            params: {
-    
-            },
-            headers: {
-                'Authorization': "Bearer" + token
-            }
-        })
-        .then(response => {
-            console.log('customer: ', response.data)
-            resolve(response.data)
-        })
-        .catch(function (error) {
-            console.log('customer err: ', error)
-            reject(error)
-        })
+    return new Promise(async function(resolve, reject){
+        resolve(await get(token, 'customer')).catch(err => { reject(err) });
     })
 }
-
