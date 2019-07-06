@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve"
+    "postinstall": "npm run build",
+    "start": "node src/server.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -16,6 +17,8 @@
     "client-oauth2": "^4.2.4",
     "core-js": "^2.6.5",
     "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "serve-static": "^1.14.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.7",
     "vuetify": "^1.5.16",
