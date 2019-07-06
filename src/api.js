@@ -1,5 +1,3 @@
-import { async } from 'q';
-
 const axios = require('axios')
 
 export async function getToken(uname, psw){
@@ -8,7 +6,7 @@ export async function getToken(uname, psw){
         const bankAuth = new ClientOAuth2({
             clientId: "my-trusted-client",
             clientSecret: "secret",
-            accessTokenUri: "http://localhost:8080/oauth/token"
+            accessTokenUri: "https://inholland-bank.herokuapp.com/oauth/token"
         });
         let login = await bankAuth.owner.getToken(uname, psw);
         if(login.accessToken){
@@ -22,7 +20,7 @@ export async function getToken(uname, psw){
 async function get(token, endpoint){
     return new Promise(async function(resolve, reject){
         axios
-        .get(`http://localhost:8080/api/${endpoint}`, {
+        .get(`https://inholland-bank.herokuapp.com/api/${endpoint}`, {
             params: {
     
             },
